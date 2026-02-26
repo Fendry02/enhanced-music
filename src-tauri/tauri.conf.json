@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "enhanced-music",
+  "productName": "Enhanced Music",
   "version": "0.1.0",
   "identifier": "com.musiccontext.app",
   "build": {
@@ -12,9 +12,15 @@
   "app": {
     "windows": [
       {
-        "title": "enhanced-music",
-        "width": 800,
-        "height": 600
+        "label": "main",
+        "title": "Enhanced Music",
+        "width": 380,
+        "height": 520,
+        "decorations": false,
+        "visible": false,
+        "resizable": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true
       }
     ],
     "security": {
