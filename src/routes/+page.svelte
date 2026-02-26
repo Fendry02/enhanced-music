@@ -1,6 +1,6 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/core";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy, untrack } from "svelte";
 
   interface Track {
     title: string;
@@ -9,9 +9,26 @@
     is_playing: boolean;
   }
 
-  let track = $state<Track | null>(null);
+  let track  = $state<Track | null>(null);
+  let artwork = $state<string | null>(null);
   let intervalId: ReturnType<typeof setInterval> | undefined;
   let fetching = false;
+
+  // Changes only when the actual track changes — not on play/pause
+  let trackId = $derived(track ? `${track.title}|||${track.artist}` : null);
+
+  $effect(() => {
+    if (!trackId) {
+      artwork = null;
+      return;
+    }
+    // untrack to read title/artist without making them effect dependencies
+    const title  = untrack(() => track?.title  ?? "");
+    const artist = untrack(() => track?.artist ?? "");
+    invoke<string | null>("get_artwork", { title, artist })
+      .then(data => { artwork = data; })
+      .catch(() => { artwork = null; });
+  });
 
   const fetchTrack = async () => {
     if (fetching) return;
@@ -52,15 +69,33 @@
     {#if track}
       <div class="track-card">
         <div class="card-specular" aria-hidden="true"></div>
-        <span class="label" class:playing={track.is_playing} class:paused={!track.is_playing}>
-          <span class="label-dot" aria-hidden="true"></span>
-          {track.is_playing ? "Now Playing" : "Paused"}
-        </span>
-        <p class="track-title">{track.title}</p>
-        <div class="track-meta">
-          <span class="track-artist">{track.artist}</span>
-          <span class="dot">·</span>
-          <span class="track-album">{track.album}</span>
+        <div class="track-main">
+          <div class="artwork-wrap">
+            {#if artwork}
+              <img class="artwork" src={artwork} alt="Album artwork" />
+            {:else}
+              <div class="artwork-placeholder" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path d="M8 16.5V7L18 5V14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="5.5" cy="16.5" r="2.5" fill="currentColor"/>
+                  <circle cx="15.5" cy="14" r="2.5" fill="currentColor"/>
+                </svg>
+              </div>
+            {/if}
+          </div>
+
+          <div class="track-info">
+            <span class="label" class:playing={track.is_playing} class:paused={!track.is_playing}>
+              <span class="label-dot" aria-hidden="true"></span>
+              {track.is_playing ? "Now Playing" : "Paused"}
+            </span>
+            <p class="track-title">{track.title}</p>
+            <div class="track-meta">
+              <span class="track-artist">{track.artist}</span>
+              <span class="dot">·</span>
+              <span class="track-album">{track.album}</span>
+            </div>
+          </div>
         </div>
       </div>
     {:else}
@@ -195,6 +230,44 @@
       inset 0 1px 0 var(--card-inset-top),
       inset 0 -1px 0 rgba(0, 0, 0, 0.06),
       0 6px 28px var(--glass-shadow);
+  }
+
+  .track-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .artwork-wrap {
+    flex-shrink: 0;
+  }
+
+  .artwork {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    object-fit: cover;
+    display: block;
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .artwork-placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    background: rgba(128, 128, 128, 0.12);
+    border: 0.5px solid rgba(128, 128, 128, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+  }
+
+  .track-info {
+    flex: 1;
+    min-width: 0;
   }
 
   /* Per-card specular */
