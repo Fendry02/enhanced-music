@@ -244,51 +244,51 @@
 <style>
   /* ── Design tokens ── light ──────────────────────────────── */
   :root {
-    --glass-bg:      rgba(255, 255, 255, 0.52);
-    --glass-border:  rgba(0, 0, 0, 0.11);
-    --glass-shine:   rgba(255, 255, 255, 0.82);
-    --glass-shadow:  rgba(0, 0, 0, 0.16);
-    --card-bg:       rgba(255, 255, 255, 0.76);
-    --card-border:   rgba(0, 0, 0, 0.09);
-    --card-shine:    rgba(255, 255, 255, 0.92);
-    --fact-card-bg:  rgba(255, 193, 7, 0.08);
-    --fact-card-border: rgba(255, 193, 7, 0.22);
-    --text-1:        rgba(0, 0, 0, 0.92);
-    --text-2:        rgba(0, 0, 0, 0.72);
-    --text-3:        rgba(0, 0, 0, 0.44);
-    --badge-bg:      rgba(0, 0, 0, 0.07);
-    --badge-fg:      rgba(0, 0, 0, 0.68);
-    --skel-base:     rgba(0, 0, 0, 0.07);
-    --skel-shine:    rgba(255, 255, 255, 0.55);
-    --green:         rgb(28, 185, 68);
-    --amber:         rgb(210, 120, 0);
-    --gold:          rgb(180, 130, 0);
-    --r-panel:       22px;
-    --r-card:        16px;
+    --glass-bg:         rgba(255, 255, 255, 0.60);
+    --glass-border:     rgba(0, 0, 0, 0.11);
+    --glass-shine:      rgba(255, 255, 255, 0.82);
+    --glass-shadow:     rgba(0, 0, 0, 0.16);
+    --card-bg:          rgba(255, 255, 255, 0.90);
+    --card-border:      rgba(0, 0, 0, 0.09);
+    --card-shine:       rgba(255, 255, 255, 0.98);
+    --fact-card-bg:     rgba(255, 193, 7, 0.10);
+    --fact-card-border: rgba(255, 193, 7, 0.24);
+    --text-1:           rgba(0, 0, 0, 0.95);
+    --text-2:           rgba(0, 0, 0, 0.82);
+    --text-3:           rgba(0, 0, 0, 0.48);
+    --badge-bg:         rgba(0, 0, 0, 0.07);
+    --badge-fg:         rgba(0, 0, 0, 0.72);
+    --skel-base:        rgba(0, 0, 0, 0.07);
+    --skel-shine:       rgba(255, 255, 255, 0.55);
+    --green:            rgb(28, 185, 68);
+    --amber:            rgb(210, 120, 0);
+    --gold:             rgb(180, 130, 0);
+    --r-panel:          22px;
+    --r-card:           16px;
   }
 
   /* ── Design tokens ── dark ───────────────────────────────── */
   @media (prefers-color-scheme: dark) {
     :root {
-      --glass-bg:      rgba(26, 26, 32, 0.68);
-      --glass-border:  rgba(255, 255, 255, 0.16);
-      --glass-shine:   rgba(255, 255, 255, 0.22);
-      --glass-shadow:  rgba(0, 0, 0, 0.50);
-      --card-bg:       rgba(255, 255, 255, 0.09);
-      --card-border:   rgba(255, 255, 255, 0.14);
-      --card-shine:    rgba(255, 255, 255, 0.18);
-      --fact-card-bg:  rgba(255, 200, 50, 0.08);
+      --glass-bg:         rgba(22, 22, 28, 0.82);
+      --glass-border:     rgba(255, 255, 255, 0.14);
+      --glass-shine:      rgba(255, 255, 255, 0.18);
+      --glass-shadow:     rgba(0, 0, 0, 0.55);
+      --card-bg:          rgba(255, 255, 255, 0.08);
+      --card-border:      rgba(255, 255, 255, 0.12);
+      --card-shine:       rgba(255, 255, 255, 0.16);
+      --fact-card-bg:     rgba(255, 200, 50, 0.08);
       --fact-card-border: rgba(255, 200, 50, 0.20);
-      --text-1:        rgba(255, 255, 255, 1.00);
-      --text-2:        rgba(255, 255, 255, 0.88);
-      --text-3:        rgba(255, 255, 255, 0.52);
-      --badge-bg:      rgba(255, 255, 255, 0.12);
-      --badge-fg:      rgba(255, 255, 255, 0.82);
-      --skel-base:     rgba(255, 255, 255, 0.09);
-      --skel-shine:    rgba(255, 255, 255, 0.20);
-      --green:         rgb(48, 219, 91);
-      --amber:         rgb(255, 159, 10);
-      --gold:          rgb(255, 200, 50);
+      --text-1:           rgba(255, 255, 255, 1.00);
+      --text-2:           rgba(255, 255, 255, 0.92);
+      --text-3:           rgba(255, 255, 255, 0.55);
+      --badge-bg:         rgba(255, 255, 255, 0.13);
+      --badge-fg:         rgba(255, 255, 255, 0.88);
+      --skel-base:        rgba(255, 255, 255, 0.09);
+      --skel-shine:       rgba(255, 255, 255, 0.20);
+      --green:            rgb(48, 219, 91);
+      --amber:            rgb(255, 159, 10);
+      --gold:             rgb(255, 200, 50);
     }
   }
 
@@ -390,8 +390,8 @@
 
   .artwork-wrap {
     flex-shrink: 0;
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    align-self: stretch;
     border-radius: 10px;
     overflow: hidden;
     background: var(--badge-bg);
@@ -466,7 +466,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-2);
     min-width: 0;
   }
@@ -522,8 +522,8 @@
 
   /* ── Body text ───────────────────────────────────────────── */
   .body-text {
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 1.7;
     color: var(--text-2);
     margin-bottom: 10px;
   }
